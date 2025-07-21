@@ -1,1 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Rosewood Park</title>
+    <meta
+      name="Here's a History of the Rosewood Park, located at 2300 Rosewood Ave, Austin, TX, 78702"
+      content="Basic Text A-Frame"
+    />
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    
+
+    <style>
+      .video-controls {
+        position: absolute;
+        width: 75px;
+        height: 20px;
+        cursor: pointer;
+        background-color: #FFF;
+        z-index: 10;
+      }
+
+      #play-btn {
+        left: 5px;
+      }
+
+      #pause-btn {
+        left: 5px;
+      }
+
+      #mute-btn {
+        left: 85px;
+      }
+
+      #unmute-btn {
+        left: 85px;
+      }
+
+      #stop-btn {
+        left: 170px;
+      }
+
+      #replay-btn {
+        left: 170px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="play-btn" class="video-controls">PLAY</div>
+    <div id="pause-btn" class="video-controls" style="visibility:hidden">
+      PAUSE
+    </div>
+    <div id="mute-btn" class="video-controls">MUTE</div>
+    <div id="unmute-btn" class="video-controls style=visibility:hidden">
+      UNMUTE
+    </div>
+    <div id="stop-btn" class="video-controls" style="visibility:hidden">
+      STOP
+    </div>
+    <div id="replay-btn" class="video-controls">REPLAY</div>
+    <a-scene>
+      <a-assets>
+        <img
+          id="scene_01"
+          crossorigin="anonymous"
+          src="./assets/360rosewoodpark.jpg"
+        />
+        <video
+          id="videoasset"
+          autoplay
+          loop="true"
+          src="./assets/rosewoodpark-vid.mp4"
+          controls
+          crossorigin="anonymous"
+        ></video>
+      </a-assets>
+      <!-- Using the asset management system. -->
+      <a-video
+        id="avideo"
+        src="#videoasset"
+        width="25"
+        height="15"
+        position="6 3 -20"
+      ></a-video>
+
+      <a-sky src="#scene_01" radius="30"> </a-sky>
+      <!--To remix the title, replace the text in between the quotes after value="Vacation Remix Party - Name of Your Vacation Spot" -->
+      <a-text
+        font="kelsonsans"
+        value="Rosewood Park"
+        width="5"
+        color="black"
+        position="-.5 1 -1.5"
+        rotation="0 0 0"
+      ></a-text>
+    </a-scene>
+    <script>
+      document.addEventListener("DOMContentLoaded", function(event) {
+        var scene = document.querySelector("a-scene");
+        var video = document.getElementById("avideo");
+        var vid = document.getElementById("videoasset");
+
+        var playBtn = document.getElementById("play-btn");
+        var pauseBtn = document.getElementById("pause-btn");
+        var muteBtn = document.getElementById("mute-btn");
+        var unmuteBtn = document.getElementById("unmute-btn");
+        var stopBtn = document.getElementById("stop-btn");
+        var replayBtn = document.getElementById("replay-btn");
+
+        playBtn.addEventListener("click", pausePlayHandler, false);
+        pauseBtn.addEventListener("click", pausePlayHandler, false);
+        muteBtn.addEventListener("click", muteUnmuteHandler, false);
+        unmuteBtn.addEventListener("click", muteUnmuteHandler, false);
+        stopBtn.addEventListener("click", stopHandler, false);
+        replayBtn.addEventListener("click", replayHandler, false);
+
+        function pausePlayHandler(e) {
+          if (vid.paused) {
+            vid.play();
+            pauseBtn.style.visibility = "visible";
+            playBtn.style.visibility = "hidden";
+          } else {
+            vid.pause();
+            pauseBtn.style.visibility = "hidden";
+            playBtn.style.visibility = "visible";
+          }
+        }
+
+        function muteUnmuteHandler(e) {
+          if (vid.volume == 0.0) {
+            vid.volume = 1.0;
+            muteBtn.style.visibility = "visible";
+            unmuteBtn.style.visibility = "hidden";
+          } else {
+            vid.volume = 0.0;
+            muteBtn.style.visibility = "hidden";
+            unmuteBtn.style.visibility = "visible";
+          }
+        }
+
+        function stopHandler(e) {
+          vid.currentTime = 0;
+          vid.pause();
+        }
+
+        function replayHandler(e) {
+          vid.currentTime = 0;
+          vid.play();
+        }
+      });
+    </script>
+  </body>
+</html>
 
